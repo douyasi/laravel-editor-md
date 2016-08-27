@@ -1,0 +1,24 @@
+{
+    "name": "douyasi/laravel-editor-md",
+    "description": "editor.md for laravel",
+    "keywords": ["laravel", "editor.md", "markdown", "douyasi"],
+    "authors": [
+        {
+            "name": "raoyc",
+            "email": "raoyc2009@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/support": "~5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Douyasi\\Editor\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "minimum-stability": "dev"
+}
