@@ -5,7 +5,13 @@ function editor_css()
 
     return '<!--editor.md css-->
 <link rel="stylesheet" href="/vendor/editor.md/css/editormd.preview.min.css" />
-<link rel="stylesheet" href="/vendor/editor.md/css/editormd.min.css" />';
+<link rel="stylesheet" href="/vendor/editor.md/css/editormd.min.css" />
+<style type="text/css">
+.editormd-fullscreen {
+    z-index: 2147483647;
+}
+</style>
+';
 
 }
 
@@ -29,8 +35,7 @@ function editor_js()
 
 function editor_config($editor_id = 'mdeditor')
 {
-    $pre = str_random('6');
-    return '
+    return '<!--editor.md config-->
 <script type="text/javascript">
 var _'.$editor_id.';
 $(function() {
