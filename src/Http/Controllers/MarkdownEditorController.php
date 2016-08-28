@@ -9,13 +9,6 @@ use Validator;
 class MarkdownEditorController extends Controller
 {
 
-protected $validatorMessages = [
-        'picture.image'   => '文件类型不允许,请上传常规的图片(bmp|gif|jpg|png)文件',
-        'picture.max'    => '文件过大,文件大小不得超出5MB',
-        'document.max'   => '文件过大,文件大小不得超出50MB',
-        'document.mimes'   => '文件类型不允许,请上传常规的文档(doc|docx|xls|xlsx|ppt|pptx|pdf)文件或压缩(rar|zip|7z)文件',
-    ];
-
     /**
      * 针对editor.md所写的图片上传控制器
      * 
