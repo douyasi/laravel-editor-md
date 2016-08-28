@@ -11,7 +11,7 @@ return [
     'tocm' => 'false',  //目录下拉菜单
     'taskList' => 'true',  //任务列表
     'flowChart' => 'false',  //流程图
-    'tex' => 'flase',  //开启科学公式TeX语言支持，默认关闭
+    'tex' => 'false',  //开启科学公式TeX语言支持，默认关闭
     'imageUpload' => 'true',  //图片上传支持
     'saveHTMLToTextarea' => 'true',  //保存 HTML 到 Textarea
     'codeFold' => 'true',  //代码折叠
