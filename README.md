@@ -1,6 +1,13 @@
 # editor.md for Laravel
 
->  `editor.md` 是一款高度可定制化的 `markdown` 编辑器，官网网站：https://pandao.github.io/editor.md/ 。
+>  `editor.md` 是一款高度可定制化的 `markdown` 编辑器，官方网站：https://pandao.github.io/editor.md/ 。
+
+## 兼容版本
+
+本扩展包经过测试，适配 `Laravel 5.1` 以上稳定版本（`5.0` 版本理论上也是可行的，但未经测试）。
+
+>   特别说明：
+>   `composer` 分析某些依赖时可能会出现问题：比如在 `Laravel 5.2` 主项目中，安装本扩展包，可能会装上 `5.3` 版本的 `illuminate/support` 与 `illuminate/contracts` 相关依赖包，这样可能会造成 `5.2` 主项目出现错误。为此，本包在 `composer.json` 特别移除对 `"illuminate/support": "~5.1"` 的依赖。
 
 ## 安装与配置
 
