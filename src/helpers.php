@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * editor.md css 相关依赖
+ * 
+ * @return string
+ */
 function editor_css()
 {
 
@@ -10,11 +15,16 @@ function editor_css()
 .editormd-fullscreen {
     z-index: 2147483647;
 }
-</style>
-';
+</style>';
 
 }
 
+/**
+ * editor.md js 相关依赖
+ * 实际上，editor.md 某些功能组件（如`flowChart`）置 false，可减少对应的js依赖，但为了安全起见还是将所有可能的js依赖列出。
+ * 
+ * @return string
+ */
 function editor_js()
 {
 
@@ -33,8 +43,15 @@ function editor_js()
 
 }
 
+/**
+ * editor.md 初始化配置js代码
+ * 
+ * @param  string $editor_id 编辑器 `textarea` 所在父div层id值，默认取 `mdeditor` 字符串
+ * @return string
+ */
 function editor_config($editor_id = 'mdeditor')
 {
+
     return '<!--editor.md config-->
 <script type="text/javascript">
 var _'.$editor_id.';
@@ -64,4 +81,5 @@ $(function() {
     });
 });
 </script>';
+
 }
