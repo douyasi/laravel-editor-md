@@ -2,6 +2,11 @@
 
 >  `editor.md` 是一款高度可定制化的 `markdown` 编辑器，官方网站：https://pandao.github.io/editor.md/ 。
 
+[![Latest Stable Version](https://poser.pugx.org/douyasi/laravel-editor-md/v/stable.svg?format=flat-square)](https://packagist.org/packages/douyasi/laravel-editor-md)
+[![Latest Unstable Version](https://poser.pugx.org/douyasi/laravel-editor-md/v/unstable.svg?format=flat-square)](https://packagist.org/packages/douyasi/laravel-editor-md)
+[![License](https://poser.pugx.org/douyasi/laravel-editor-md/license?format=flat-square)](https://packagist.org/packages/douyasi/laravel-editor-md)
+[![Total Downloads](https://poser.pugx.org/douyasi/laravel-editor-md/downloads?format=flat-square)](https://packagist.org/packages/douyasi/laravel-editor-md)
+
 ## 兼容版本
 
 本扩展包经过测试，适配 `Laravel 5.1` 以上稳定版本（`5.0` 版本理论上也是可行的，但未经测试）。

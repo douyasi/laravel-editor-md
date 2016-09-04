@@ -2,6 +2,7 @@
     "name": "douyasi/laravel-editor-md",
     "description": "editor.md for laravel",
     "keywords": ["laravel", "editor.md", "markdown", "douyasi"],
+    "license": "MIT",
     "authors": [
         {
             "name": "raoyc",
