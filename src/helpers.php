@@ -105,7 +105,7 @@ if (!function_exists('editor_config')) {
                 path : "'. array_get($config, 'path', config('editor.path')) .'",
                 imageUpload : '. array_get($config, 'imageUpload', config('editor.imageUpload')) .',
                 imageFormats : '. array_get($config, 'imageFormats', json_encode(config('editor.imageFormats'))) .',
-                imageUploadURL : "'. array_get($array, 'imageUploadURL', config('editor.imageUploadURL')) .'?_token=' . csrf_token() . '&from=xetaravel-editor-md"
+                imageUploadURL : "'. array_get($config, 'imageUploadURL', config('editor.imageUploadURL')) .'?_token=' . csrf_token() . '&from=xetaravel-editor-md"
         });
     });
     </script>';
