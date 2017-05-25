@@ -13,9 +13,9 @@ if (!function_exists('format_json_message')) {
     {
         $reasons = '';
         foreach ($messages->all(':message') as $message) {
-            $reasons .= $message.' ';
+            $reasons .= $message . ' ';
         }
-        $info = '失败原因为：'.$reasons;
+        $info = 'Reason：' . $reasons;
         $json = array_replace($json, ['info' => $info]);
 
         return $json;
@@ -71,41 +71,41 @@ if (!function_exists('editor_js')) {
 
 if (!function_exists('editor_config')) {
     /**
-     * editor.md 初始化配置js代码
+     * The configuration for Editor.md
      *
-     * @param  string $editor_id 编辑器 `textarea` 所在父div层id值，默认取 `mdeditor` 字符串
+     * @param array $config The configuration options.
      *
      * @return string
      */
-    function editor_config($editor_id = 'mdeditor')
+    function editor_config($config = [])
     {
 
         return '<!-- editor.md config -->
     <script type="text/javascript">
-    var _'.$editor_id.';
+    var _'. array_get($config, 'id', 'myeditor') .';
     $(function() {
         //emoji
         editormd.emoji = {
-            path : "//staticfile.qnssl.com/emoji-cheat-sheet/1.0.0/",
+            path : "'. array_get($config, 'emojiPath', config('editor.emojiPath')) .'",
             ex : ".png"
         };
         _'.$editor_id.' = editormd({
-                id : "'.$editor_id.'",
-                width : "100%",
-                height : 640,
-                saveHTMLToTextarea : '.config('editor.saveHTMLToTextarea').',
-                emoji : '.config('editor.emoji').',
-                taskList : '.config('editor.taskList').',
-                tex : '.config('editor.tex').',
-                toc : '.config('editor.toc').',
-                tocm : '.config('editor.tocm').',
-                codeFold : '.config('editor.codeFold').',
-                flowChart: '.config('editor.flowChart').',
-                sequenceDiagram: '.config('editor.sequenceDiagram').',
-                path : "/vendor/editor.md/lib/",
-                imageUpload : '.config('editor.imageUpload').',
-                imageFormats : ["jpg", "gif", "png"],
-                imageUploadURL : "/xetaravel-editor-md/upload/picture?_token=' . csrf_token() . '&from=xetaravel-editor-md"
+                id : "'. array_get($config, 'id', 'myeditor') .'",
+                width : "'. array_get($config, 'width', config('editor.width')) .'",
+                height : "'. array_get($config, 'height', config('editor.height')) .'",
+                saveHTMLToTextarea : '. array_get($config, 'saveHTMLToTextarea', config('editor.saveHTMLToTextarea')) .',
+                emoji : '. array_get($config, 'emoji', config('editor.emoji')) .',
+                taskList : '. array_get($config, 'taskList', config('editor.taskList')) .',
+                tex : '. array_get($config, 'tex', config('editor.tex')) .',
+                toc : '. array_get($config, 'toc', config('editor.toc')) .',
+                tocm : '. array_get($config, 'tocm', config('editor.tocm')) .',
+                codeFold : '. array_get($config, 'codeFold', config('editor.codeFold')) .',
+                flowChart: '. array_get($config, 'flowChart', config('editor.flowChart')) .',
+                sequenceDiagram: '. array_get($config, 'sequenceDiagram', config('editor.sequenceDiagram')) .',
+                path : "'. array_get($config, 'path', config('editor.path')) .'",
+                imageUpload : '. array_get($config, 'imageUpload', config('editor.imageUpload')) .',
+                imageFormats : '. array_get($config, 'imageFormats', json_encode(config('editor.imageFormats'))) .',
+                imageUploadURL : "'. array_get($array, 'imageUploadURL', config('editor.imageUploadURL')) .'?_token=' . csrf_token() . '&from=xetaravel-editor-md"
         });
     });
     </script>';

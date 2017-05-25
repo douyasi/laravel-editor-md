@@ -12,14 +12,20 @@ return [
     | https://pandao.github.io/editor.md/
     |
     */
+    'width' => '100%',
+    'height' => '640',
+    'saveHTMLToTextarea' => 'true',
     'emoji' => 'true',
+    'emojiPath' => '//staticfile.qnssl.com/emoji-cheat-sheet/1.0.0/',
+    'taskList' => 'true',
+    'tex' => 'false',
     'toc' => 'true',
     'tocm' => 'false',
-    'taskList' => 'true',
-    'flowChart' => 'false',
-    'tex' => 'false',
-    'imageUpload' => 'true',
-    'saveHTMLToTextarea' => 'true',
     'codeFold' => 'true',
+    'flowChart' => 'false',
     'sequenceDiagram' => 'false',
+    'path'=> '/vendor/editor.md/lib/',
+    'imageUpload' => 'true',
+    'imageFormats' => ["jpg", "gif", "png"],
+    'imageUploadURL' => '/xetaravel-editor-md/upload/picture',
 ];
