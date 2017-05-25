@@ -89,7 +89,7 @@ if (!function_exists('editor_config')) {
             path : "'. array_get($config, 'emojiPath', config('editor.emojiPath')) .'",
             ex : ".png"
         };
-        _'.$editor_id.' = editormd({
+        _'. array_get($config, 'id', 'myeditor') .' = editormd({
                 id : "'. array_get($config, 'id', 'myeditor') .'",
                 width : "'. array_get($config, 'width', config('editor.width')) .'",
                 height : "'. array_get($config, 'height', config('editor.height')) .'",
