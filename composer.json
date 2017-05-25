@@ -1,20 +1,38 @@
 {
-    "name": "douyasi/laravel-editor-md",
-    "description": "editor.md for laravel",
-    "keywords": ["laravel", "editor.md", "markdown", "douyasi"],
+    "name": "xetaio/xetaravel-editor-md",
+    "description": "A wrapper to use Editor.md with Laravel.",
+    "keywords": [
+        "laravel",
+        "laravel-5-package",
+        "editor.md",
+        "markdown",
+        "wysiwyg"
+    ],
+    "homepage": "https://github.com/XetaIO/Xetaravel-Editor-md",
+    "support": {
+        "source": "https://github.com/XetaIO/Xetaravel-Editor-md",
+        "issues": "https://github.com/XetaIO/Xetaravel-Editor-md/issues"
+    },
+    "type": "library",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Xety",
+            "email": "emeric@xeta.io",
+            "homepage": "https://github.com/Xety"
+        },
         {
             "name": "raoyc",
             "email": "raoyc2009@gmail.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=7.0",
+        "laravel/framework": "5.4.*"
     },
     "autoload": {
         "psr-4": {
-            "Douyasi\\Editor\\": "src/"
+            "Xetaio\\Editor\\": "src/"
         },
         "files": [
             "src/helpers.php"
