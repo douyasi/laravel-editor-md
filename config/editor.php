@@ -28,4 +28,14 @@ return [
     'imageUpload' => 'true',
     'imageFormats' => ["jpg", "gif", "png"],
     'imageUploadURL' => '/xetaravel-editor-md/upload/picture',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Destination Path for uploaded files
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify where to upload the files.
+    |
+    */
+   'basaUploadPath' => 'editor-md/uploads/content/'
 ];

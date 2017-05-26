@@ -1,11 +1,11 @@
 <?php
 namespace Xetaio\Editor\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Illuminate\Http\JsonResponse;
 
 class MarkdownEditorController extends Controller
 {
@@ -62,7 +62,7 @@ class MarkdownEditorController extends Controller
             );
         }
 
-        $destPath = 'editor-md/uploads/content/';
+        $destPath = config('basaUploadPath', 'editor-md/uploads/content/');
         $savePath = $destPath . date('Ymd', time());
 
         if (!is_dir($savePath)) {

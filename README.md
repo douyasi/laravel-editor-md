@@ -32,11 +32,11 @@
 > ```
 >
 > ### Configuration
-> ALl configuration options can be found in your `config/editor.php` file. For a full configuration options, read the documentation on the [Editor.md](https://pandao.github.io/editor.md/) site.
+> All configuration options can be found in your `config/editor.php` file. For a full configuration options, read the documentation on the [Editor.md](https://pandao.github.io/editor.md/) site.
 >
 > ### Usage
-> To use it with the basic options, just use the helper with the plugin:
-> ```php
+> To use it with the basic options, just use the helpers included with the plugin:
+> ```html
 > <!DOCTYPE html>
 > <html lang="en">
 > <head>
@@ -85,6 +85,7 @@
 > ```html
 > <!-- controller/my_view.blade.php -->
 > @extends('layouts.app')
+>
 > @push('styles')
 >    {!! editor_css() !!}
 > @endpush
