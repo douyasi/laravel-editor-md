@@ -39,8 +39,7 @@ class MarkdownEditorController extends Controller
             'editormd-image-file' => [
                 'max:5120',
                 'image',
-                'mimes:jpeg,gif,png',
-
+                'mimes:jpeg,gif,png'
             ],
             'file-extension' => [
                 'required',
@@ -51,7 +50,7 @@ class MarkdownEditorController extends Controller
             'editormd-image-file.max' => 'The file is too large, the size of the file must not exceed :maxKb.',
             'editormd-image-file.image' => 'The file must be an image.',
             'editormd-image-file.mimes' => 'The file must be of type .gif, .jpeg and .png only.',
-            'file-extension.required' => 'The file extension is required.'
+            'file-extension.required' => 'The file extension is required.',
             'file-extension.in' => 'The file extension must be of type .gif, .jpg and .png only.'
         ];
         $validator = Validator::make($data, $rules, $messages);
