@@ -4,22 +4,24 @@ namespace Xetaio\Editor\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\JsonResponse;
 
 class MarkdownEditorController extends Controller
 {
 
     /**
-     * 针对editor.md所写的图片上传控制器
+     * Handle a file upload.
      *
-     * @param  Request $requst
+     * @param \Illuminate\Http\Request $requst
      *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function postUploadMarkdownEditorPicture(Request $request)
+    public function postUploadMarkdownEditorPicture(Request $request): JsonResponse
     {
         $json = [
             'success' => 0,
-            'message' => 'Unknown',
+            'message' => 'No file to upload.',
             'url' => ''
         ];
 
@@ -28,51 +30,77 @@ class MarkdownEditorController extends Controller
         }
 
         $file = $request->file('editormd-image-file');
+        $ext = $file->getClientOriginalExtension();
+
         $data = $request->all();
+        $data['file-extension'] = $ext;
 
         $rules = [
-            'editormd-image-file' => 'max:5120',
-        ];
+            'editormd-image-file' => [
+                'max:5120',
+                'image',
+                'mimes:jpeg,gif,png',
 
+            ],
+            'file-extension' => [
+                'required',
+                Rule::in(['gif', 'jpg', 'png'])
+            ]
+        ];
         $messages = [
-            'editormd-image-file.max'    => 'The file is too large, the size of the file must not exceed 5MB'
+            'editormd-image-file.max' => 'The file is too large, the size of the file must not exceed :maxKb.',
+            'editormd-image-file.image' => 'The file must be an image.',
+            'editormd-image-file.mimes' => 'The file must be of type .gif, .jpeg and .png only.',
+            'file-extension.in' => 'The file extension  must be of type .gif, .jpg and .png only'
         ];
         $validator = Validator::make($data, $rules, $messages);
 
         if ($validator->passes()) {
-            $realPath = $file->getRealPath();
-            $destPath = 'uploads/content/';
-            $savePath = $destPath.''.date('Ymd', time());
+            return response()->json(
+                $this->formatJsonMessage($validator->messages(), $json)
+            );
+        }
 
-            //Create the directory if it doesn't exist.
-            is_dir($savePath) || mkdir($savePath);
+        $destPath = 'editor-md/uploads/content/';
+        $savePath = $destPath . date('Ymd', time());
 
-            $name = $file->getClientOriginalName();
-            $ext = $file->getClientOriginalExtension();
+        if (!is_dir($savePath)) {
+            mkdir($savePath);
+        }
+        $name = $file->getClientOriginalName();
 
-            $check_ext = in_array($ext, ['gif', 'jpg', 'png'], true);
+        $uniqid = uniqid() . '_' . date('s');
+        $newFileName = $uniqid . '.' . $ext;
+        $newFilePath = '/' . $savePath . '/' . $newFileName;
 
-            if ($check_ext) {
-                $uniqid = uniqid().'_'.date('s');
-                $oFile = $uniqid.'o.'.$ext;
-                $fullfilename = '/'.$savePath.'/'.$oFile;  //Original full path
-                if ($file->isValid()) {
-                    $uploadSuccess = $file->move($savePath, $oFile);  //Move the file
-                    $oFilePath = $savePath.'/'.$oFile;
-                    $json = array_replace($json, ['success' => 1, 'url' => $fullfilename]);
-                } else {
-                    $json = array_replace($json, ['success' => 0, 'meassge' => 'The file is invalid.']);
-                }
-            } else {
-                $json = array_replace(
-                    $json,
-                    ['success' => 0, 'message' => 'The file type is not allowed (gif|jpg|png).']
-                );
-            }
+        if ($file->isValid()) {
+            $uploadSuccess = $file->move($savePath, $newFileName);
+            $json = array_replace($json, ['success' => 1, 'url' => $newFilePath]);
         } else {
-            $json = format_json_message($validator->messages(), $json);
+            $json = array_replace($json, ['success' => 0, 'meassge' => 'The file is invalid.']);
         }
 
         return response()->json($json);
+    }
+
+    /**
+     * Format the form validation messages and return it as a json.
+     *
+     * @param array $messages The messages to format.
+     * @param array $json The array that contain the message.
+     *
+     * @return array
+     */
+    protected function formatJsonMessage($messages, $json)
+    {
+        $reasons = '';
+
+        foreach ($messages->all(':message') as $message) {
+            $reasons .= $message . ' ';
+        }
+        $info = $reasons;
+        $json = array_replace($json, ['message' => $info]);
+
+        return $json;
     }
 }

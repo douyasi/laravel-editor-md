@@ -1,27 +1,5 @@
 <?php
 
-if (!function_exists('format_json_message')) {
-    /**
-     * Format the form validation message and return it as a json.
-     *
-     * @param array $messages The messages to format.
-     * @param array $json The array to convert to json.
-     *
-     * @return array
-     */
-    function format_json_message($messages, $json)
-    {
-        $reasons = '';
-        foreach ($messages->all(':message') as $message) {
-            $reasons .= $message . ' ';
-        }
-        $info = 'Reason：' . $reasons;
-        $json = array_replace($json, ['info' => $info]);
-
-        return $json;
-    }
-}
-
 if (!function_exists('editor_css')) {
     /**
      * The CSS used by Editor.md
