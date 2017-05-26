@@ -101,8 +101,8 @@
 >    @endphp
 >
 >    @include('editor/partials/_comment', $config)
-@endpush
-
+>@endpush
+>
 > @section('content')
 > //...
 > <div id="commentEditor">
