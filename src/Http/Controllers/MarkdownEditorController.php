@@ -62,7 +62,7 @@ class MarkdownEditorController extends Controller
             );
         }
 
-        $destPath = config('basaUploadPath', 'editor-md/uploads/content/');
+        $destPath = config('editor.basaUploadPath', 'editor-md/uploads/content/');
         $savePath = $destPath . date('Ymd', time());
 
         if (!is_dir($savePath)) {
