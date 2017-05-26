@@ -62,7 +62,7 @@
 >
 > #### Advanced usage
 > If you want to use your custom options or options that are not in the config file, one of the best way, it to setup your Editor like that :
-> ```php
+> ```html
 > <!-- layouts/app.blade.php -->
 > <!DOCTYPE html>
 > <html lang="en">
@@ -82,7 +82,7 @@
 > </body>
 > </html>
 > ```
-> ```php
+> ```html
 > <!-- controller/my_view.blade.php -->
 > @extends('layouts.app')
 > @push('styles')
@@ -101,7 +101,7 @@
 >    @endphp
 >
 >    @include('editor/partials/_comment', $config)
->@endpush
+> @endpush
 >
 > @section('content')
 > //...
@@ -111,11 +111,11 @@
 > //...
 > @endsection
 > ```
-> ```php
+> ```html
 > <!-- editor/partials/_comment.blade.php -->
 > <script type="text/javascript">
-var _{{ array_get($config, 'id', 'myeditor') }};
-$(function() {
+> var _{{ array_get($config, 'id', 'myeditor') }};
+> $(function() {
 >    editormd.emoji = {
 >        path : "{{ array_get($config, 'emojiPath', config('editor.emojiPath')) }}",
 >        ext : ".png"
