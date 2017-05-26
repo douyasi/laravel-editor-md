@@ -24,3 +24,138 @@
 >     //...
 > ]
 > ```
+>
+> #### Vendor Publish
+> Publish the vendor files to your application (included the config file `config/editor.php` and the `public/vendor/editor.md` directory) :
+> ```php
+> php artisan vendor:publish --provider="Xetaio\Editor\EditorServiceProvider"
+> ```
+>
+> ### Configuration
+> ALl configuration options can be found in your `config/editor.php` file. For a full configuration options, read the documentation on the [Editor.md](https://pandao.github.io/editor.md/) site.
+>
+> ### Usage
+> To use it with the basic options, just use the helper with the plugin:
+> ```php
+> <!DOCTYPE html>
+> <html lang="en">
+> <head>
+>    <meta charset="UTF-8">
+>    <title>Editor.md example</title>
+>    {!! editor_css() !!}
+> </head>
+> <body>
+>     <h2>Editor.md example</h2>
+>     
+>     <div id="editormd">
+>         <!-- You must hide it with `display:none;` -->
+>         <textarea class="form-control" name="content" style="display:none;">
+>             # Editor.md for Laravel
+>         </textarea>
+>     </div>
+>
+>     {!! editor_js() !!}
+>     {!! editor_config(['id' => 'editormd']) !!}
+> </body>
+> </html>
+> ```
+>
+> #### Advanced usage
+> If you want to use your custom options or options that are not in the config file, one of the best way, it to setup your Editor like that :
+> ```php
+> <!-- layouts/app.blade.php -->
+> <!DOCTYPE html>
+> <html lang="en">
+> <head>
+>    <meta charset="UTF-8">
+>    <title>Editor.md example</title>
+>    
+>    <!-- Embed Styles -->
+>    @stack('styles')
+> </head>
+> <body>
+>    <!-- Content -->
+>    @yield('content')
+>
+>    <!-- Embed Scripts -->
+>    @stack('scripts')
+> </body>
+> </html>
+> ```
+> ```php
+> <!-- controller/my_view.blade.php -->
+> @extends('layouts.app')
+> @push('styles')
+>    {!! editor_css() !!}
+> @endpush
+>
+> @push('scripts')
+>    {!! editor_js() !!}
+>
+>    @php
+>        $config = [
+>            'id' => 'commentEditor',
+>            'height' => '350',
+>            // Others settings here...
+>        ];
+>    @endphp
+>
+>    @include('editor/partials/_comment', $config)
+@endpush
+
+> @section('content')
+> //...
+> <div id="commentEditor">
+>    <textarea class="form-control" required="required" style="display:none;" name="content"></textarea>
+> </div>
+> //...
+> @endsection
+> ```
+> ```php
+> <!-- editor/partials/_comment.blade.php -->
+> <script type="text/javascript">
+var _{{ array_get($config, 'id', 'myeditor') }};
+$(function() {
+>    editormd.emoji = {
+>        path : "{{ array_get($config, 'emojiPath', config('editor.emojiPath')) }}",
+>        ext : ".png"
+>    };
+>    _{{ array_get($config, 'id', 'myeditor') }} = editormd({
+>        id : "{{ array_get($config, 'id', 'myeditor') }}",
+>        width : "{{ array_get($config, 'width', config('editor.width')) }}",
+>        height : "{{ array_get($config, 'height', config('editor.height')) }}",
+>        saveHTMLToTextarea : {{ array_get($config, 'saveHTMLToTextarea', config('editor.saveHTMLToTextarea')) }},
+>        emoji : {{ array_get($config, 'emoji', config('editor.emoji')) }},
+>        taskList : {{ array_get($config, 'taskList', config('editor.taskList')) }},
+>        tex : {{ array_get($config, 'tex', config('editor.tex')) }},
+>        toc : {{ array_get($config, 'toc', config('editor.toc')) }},
+>        tocm : {{ array_get($config, 'tocm', config('editor.tocm')) }},
+>        codeFold : {{ array_get($config, 'codeFold', config('editor.codeFold')) }},
+>        flowChart: {{ array_get($config, 'flowChart', config('editor.flowChart')) }},
+>        sequenceDiagram: {{ array_get($config, 'sequenceDiagram', config('editor.sequenceDiagram')) }},
+>        path : "{{ array_get($config, 'path', config('editor.path')) }}",
+>        imageUpload : {{ array_get($config, 'imageUpload', config('editor.imageUpload')) }},
+>        imageFormats : {!! array_get($config, 'imageFormats', json_encode(config('editor.imageFormats'))) !!},
+>        imageUploadURL : "{{ array_get($config, 'imageUploadURL', config('editor.imageUploadURL')) }}?_token={{ csrf_token() }}&from=xetaravel-editor-md",
+>        pluginPath : "{{ asset(array_get($config, 'pluginPath', config('editor.pluginPath'))) }}/",
+>        watch : false,
+>        editorTheme : 'mdn-like',
+>        placeholder : 'Type your comment here...',
+>        toolbarIcons : function () {
+>            return [
+>                "undo", "redo", "|",
+>                "bold", "italic", "quote", "|",
+>                "h1", "h2", "|",
+>                "help"
+>            ];
+>        }
+>       // Others settings...
+>    });
+>});
+></script>
+>```
+> ### Upload File
+> This package come with a build-in upload feature. You don't have to do anything to get it work.. expect to upload an image. :stuck_out_tongue_winking_eye:
+> If you want to do your own uploader, just register a new route and set it to `imageUploadURL` configuration option. (Of course you will need to create your own Controller and action, [take a look here for an exemple](https://github.com/XetaIO/Xetaravel-Editor-md/blob/master/src/Http/Controllers/MarkdownEditorController.php))
+> ## Contribute
+> If you want to contribute to the project by adding new features or just fix a bug, feel free to do a PR.

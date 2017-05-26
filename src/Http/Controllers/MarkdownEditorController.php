@@ -51,11 +51,12 @@ class MarkdownEditorController extends Controller
             'editormd-image-file.max' => 'The file is too large, the size of the file must not exceed :maxKb.',
             'editormd-image-file.image' => 'The file must be an image.',
             'editormd-image-file.mimes' => 'The file must be of type .gif, .jpeg and .png only.',
-            'file-extension.in' => 'The file extension  must be of type .gif, .jpg and .png only'
+            'file-extension.required' => 'The file extension is required.'
+            'file-extension.in' => 'The file extension must be of type .gif, .jpg and .png only.'
         ];
         $validator = Validator::make($data, $rules, $messages);
 
-        if ($validator->passes()) {
+        if (!$validator->passes()) {
             return response()->json(
                 $this->formatJsonMessage($validator->messages(), $json)
             );
