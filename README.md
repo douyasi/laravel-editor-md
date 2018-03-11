@@ -7,7 +7,7 @@
 > A wrapper to use [Editor.md](https://pandao.github.io/editor.md/) with Laravel.
 >
 > ## Requirement
-> ![PHP](https://img.shields.io/badge/PHP->=7.0-brightgreen.svg?style=flat-square)
+> ![PHP](https://img.shields.io/badge/PHP->=7.1-brightgreen.svg?style=flat-square)
 >
 > ## Installation
 >
