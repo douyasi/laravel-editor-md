@@ -1,67 +1,106 @@
 <?php
+namespace Xetaio\Editor\Http\Controllers;
 
-namespace Douyasi\Editor\Http\Controllers;
-
-use Illuminate\Routing\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class MarkdownEditorController extends Controller
 {
 
     /**
-     * 针对editor.md所写的图片上传控制器
-     * 
-     * @param  Request $requst
-     * @return Response
+     * Handle a file upload.
+     *
+     * @param \Illuminate\Http\Request $requst
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function postUploadMarkdownEditorPicture(Request $request)
+    public function postUploadMarkdownEditorPicture(Request $request): JsonResponse
     {
         $json = [
             'success' => 0,
-            'message' => '失败原因为：未知',
-            'url' => '',
+            'message' => 'No file to upload.',
+            'url' => ''
         ];
-        if ($request->hasFile('editormd-image-file')) {
-            //
-            $file = $request->file('editormd-image-file');
-            $data = $request->all();
-            $rules = [
-                'editormd-image-file'    => 'max:5120',
-            ];
-            $messages = [
-                'editormd-image-file.max'    => '文件过大,文件大小不得超出5MB',
-            ];
-            $validator = Validator::make($data, $rules, $messages);
-            if ($validator->passes()) {
-                $realPath = $file->getRealPath();
-                $destPath = 'uploads/content/';
-                $savePath = $destPath.''.date('Ymd', time());
-                is_dir($savePath) || mkdir($savePath);  //如果不存在则创建目录
-                $name = $file->getClientOriginalName();
-                $ext = $file->getClientOriginalExtension();
 
-                $check_ext = in_array($ext, ['gif', 'jpg', 'png'], true);
-
-                if ($check_ext) {
-                    $uniqid = uniqid().'_'.date('s');
-                    $oFile = $uniqid.'o.'.$ext;
-                    $fullfilename = '/'.$savePath.'/'.$oFile;  //原始完整路径
-                    if ($file->isValid()) {
-                        $uploadSuccess = $file->move($savePath, $oFile);  //移动文件
-                        $oFilePath = $savePath.'/'.$oFile;
-                        $json = array_replace($json, ['success' => 1, 'url' => $fullfilename]);
-                    } else {
-                        $json = array_replace($json, ['success' => 0, 'meassge' => '失败原因为：文件校验失败']);
-                    }
-                } else {
-                    $json = array_replace($json, ['success' => 0, 'message' => '失败原因为：文件类型不允许,请上传常规的图片（gif|jpg|png）文件']);
-                }
-            } else {
-                $json = format_json_message($validator->messages(), $json);
-            }
+        if (!$request->hasFile('editormd-image-file')) {
+            return response()->json($json);
         }
+
+        $file = $request->file('editormd-image-file');
+        $ext = $file->getClientOriginalExtension();
+
+        $data = $request->all();
+        $data['file-extension'] = $ext;
+
+        $rules = [
+            'editormd-image-file' => [
+                'max:5120',
+                'image',
+                'mimes:jpeg,gif,png'
+            ],
+            'file-extension' => [
+                'required',
+                Rule::in(['gif', 'jpg', 'png'])
+            ]
+        ];
+        $messages = [
+            'editormd-image-file.max' => 'The file is too large, the size of the file must not exceed :maxKb.',
+            'editormd-image-file.image' => 'The file must be an image.',
+            'editormd-image-file.mimes' => 'The file must be of type .gif, .jpeg and .png only.',
+            'file-extension.required' => 'The file extension is required.',
+            'file-extension.in' => 'The file extension must be of type .gif, .jpg and .png only.'
+        ];
+        $validator = Validator::make($data, $rules, $messages);
+
+        if (!$validator->passes()) {
+            return response()->json(
+                $this->formatJsonMessage($validator->messages(), $json)
+            );
+        }
+
+        $destPath = config('editor.basaUploadPath', 'editor-md/uploads/content/');
+        $savePath = $destPath . date('Ymd', time());
+
+        if (!is_dir($savePath)) {
+            mkdir($savePath);
+        }
+        $name = $file->getClientOriginalName();
+
+        $uniqid = uniqid() . '_' . date('s');
+        $newFileName = $uniqid . '.' . $ext;
+        $newFilePath = '/' . $savePath . '/' . $newFileName;
+
+        if ($file->isValid()) {
+            $uploadSuccess = $file->move($savePath, $newFileName);
+            $json = array_replace($json, ['success' => 1, 'url' => $newFilePath]);
+        } else {
+            $json = array_replace($json, ['success' => 0, 'meassge' => 'The file is invalid.']);
+        }
+
         return response()->json($json);
     }
 
+    /**
+     * Format the form validation messages and return it as a json.
+     *
+     * @param array $messages The messages to format.
+     * @param array $json The array that contain the message.
+     *
+     * @return array
+     */
+    protected function formatJsonMessage($messages, $json)
+    {
+        $reasons = '';
+
+        foreach ($messages->all(':message') as $message) {
+            $reasons .= $message . ' ';
+        }
+        $info = $reasons;
+        $json = array_replace($json, ['message' => $info]);
+
+        return $json;
+    }
 }

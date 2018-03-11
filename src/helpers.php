@@ -1,105 +1,91 @@
 <?php
 
-if (!function_exists('format_json_message')) {
+if (!function_exists('editor_css')) {
     /**
-     * 格式化表单校验消息，并进行json数组化预处理
+     * The CSS used by Editor.md
      *
-     * @param  array $messages 未格式化之前数组
-     * @param  array $json 原始json数组数据
-     * @return array
+     * @return string
      */
-    function format_json_message($messages, $json)
+    function editor_css()
     {
-        $reasons = '';
-        foreach ($messages->all(':message') as $message) {
-            $reasons .= $message.' ';
-        }
-        $info = '失败原因为：'.$reasons;
-        $json = array_replace($json, ['info' => $info]);
-        return $json;
+
+        return '<!-- editor.md css -->
+    <link rel="stylesheet" href="/vendor/editor.md/css/editormd.preview.min.css" />
+    <link rel="stylesheet" href="/vendor/editor.md/css/editormd.min.css" />
+    <style type="text/css">
+    .editormd-fullscreen {
+        z-index: 2147483647;
+    }
+    </style>';
     }
 }
 
-/**
- * editor.md css 相关依赖
- * 
- * @return string
- */
-function editor_css()
-{
+if (!function_exists('editor_js')) {
+    /**
+     * The JS used by Editor.md
+     *
+     * @param string $lang The language to use.
+     *
+     * @return string
+     */
+    function editor_js($lang = 'en')
+    {
 
-    return '<!--editor.md css-->
-<link rel="stylesheet" href="/vendor/editor.md/css/editormd.preview.min.css" />
-<link rel="stylesheet" href="/vendor/editor.md/css/editormd.min.css" />
-<style type="text/css">
-.editormd-fullscreen {
-    z-index: 2147483647;
-}
-</style>';
-
-}
-
-/**
- * editor.md js 相关依赖
- * 实际上，editor.md 某些功能组件（如`flowChart`）置 false，可减少对应的js依赖，但为了安全起见还是将所有可能的js依赖列出。
- * 
- * @return string
- */
-function editor_js()
-{
-
-    return '<!--editor.md js-->
-<script type="text/javascript">
-    window.jQuery || document.write(unescape("%3Cscript%20type%3D%22text/javascript%22%20src%3D%22//cdn.bootcss.com/jquery/2.2.4/jquery.min.js%22%3E%3C/script%3E"));
-</script>
-<script src="/vendor/editor.md/lib/marked.min.js"></script>
-<script src="/vendor/editor.md/lib/prettify.min.js"></script>
-<script src="/vendor/editor.md/lib/raphael.min.js"></script>
-<script src="/vendor/editor.md/lib/underscore.min.js"></script>
-<script src="/vendor/editor.md/lib/sequence-diagram.min.js"></script>
-<script src="/vendor/editor.md/lib/flowchart.min.js"></script>
-<script src="/vendor/editor.md/lib/jquery.flowchart.min.js"></script>
-<script src="/vendor/editor.md/js/editormd.min.js"></script>';
-
+        return '<!-- editor.md js -->
+    <script type="text/javascript">
+        window.jQuery || document.write(unescape("%3Cscript%20type%3D%22text/javascript%22%20src%3D%22//cdn.bootcss.com/jquery/2.2.4/jquery.min.js%22%3E%3C/script%3E"));
+    </script>
+    <script src="/vendor/editor.md/lib/marked.min.js"></script>
+    <script src="/vendor/editor.md/lib/prettify.min.js"></script>
+    <script src="/vendor/editor.md/lib/raphael.min.js"></script>
+    <script src="/vendor/editor.md/lib/underscore.min.js"></script>
+    <script src="/vendor/editor.md/lib/sequence-diagram.min.js"></script>
+    <script src="/vendor/editor.md/lib/flowchart.min.js"></script>
+    <script src="/vendor/editor.md/lib/jquery.flowchart.min.js"></script>
+    <script src="/vendor/editor.md/js/editormd.min.js"></script>
+    <script src="/vendor/editor.md/languages/' . $lang . '.js"></script>';
+    }
 }
 
-/**
- * editor.md 初始化配置js代码
- * 
- * @param  string $editor_id 编辑器 `textarea` 所在父div层id值，默认取 `mdeditor` 字符串
- * @return string
- */
-function editor_config($editor_id = 'mdeditor')
-{
+if (!function_exists('editor_config')) {
+    /**
+     * The configuration for Editor.md
+     *
+     * @param array $config The configuration options.
+     *
+     * @return string
+     */
+    function editor_config($config = [])
+    {
 
-    return '<!--editor.md config-->
-<script type="text/javascript">
-var _'.$editor_id.';
-$(function() {
-    //修正emoji图片错误
-    editormd.emoji     = {
-        path  : "//staticfile.qnssl.com/emoji-cheat-sheet/1.0.0/",
-        ext   : ".png"
-    };
-    _'.$editor_id.' = editormd({
-            id : "'.$editor_id.'",
-            width : "90%",
-            height : 640,
-            saveHTMLToTextarea : '.config('editor.saveHTMLToTextarea').',
-            emoji : '.config('editor.emoji').',
-            taskList : '.config('editor.taskList').',
-            tex : '.config('editor.tex').',
-            toc : '.config('editor.toc').',
-            tocm : '.config('editor.tocm').',
-            codeFold : '.config('editor.codeFold').',
-            flowChart: '.config('editor.flowChart').',
-            sequenceDiagram: '.config('editor.sequenceDiagram').',
-            path : "/vendor/editor.md/lib/",
-            imageUpload : '.config('editor.imageUpload').',
-            imageFormats : ["jpg", "gif", "png"],
-            imageUploadURL : "/laravel-editor-md/upload/picture?_token='.csrf_token().'&from=laravel-editor-md"
+        return '<!-- editor.md config -->
+    <script type="text/javascript">
+    var _'. array_get($config, 'id', 'myeditor') .';
+    $(function() {
+        //emoji
+        editormd.emoji = {
+            path : "'. array_get($config, 'emojiPath', config('editor.emojiPath')) .'",
+            ex : ".png"
+        };
+        _'. array_get($config, 'id', 'myeditor') .' = editormd({
+                id : "'. array_get($config, 'id', 'myeditor') .'",
+                width : "'. array_get($config, 'width', config('editor.width')) .'",
+                height : "'. array_get($config, 'height', config('editor.height')) .'",
+                saveHTMLToTextarea : '. array_get($config, 'saveHTMLToTextarea', config('editor.saveHTMLToTextarea')) .',
+                emoji : '. array_get($config, 'emoji', config('editor.emoji')) .',
+                taskList : '. array_get($config, 'taskList', config('editor.taskList')) .',
+                tex : '. array_get($config, 'tex', config('editor.tex')) .',
+                toc : '. array_get($config, 'toc', config('editor.toc')) .',
+                tocm : '. array_get($config, 'tocm', config('editor.tocm')) .',
+                codeFold : '. array_get($config, 'codeFold', config('editor.codeFold')) .',
+                flowChart: '. array_get($config, 'flowChart', config('editor.flowChart')) .',
+                sequenceDiagram: '. array_get($config, 'sequenceDiagram', config('editor.sequenceDiagram')) .',
+                path : "'. array_get($config, 'path', config('editor.path')) .'",
+                imageUpload : '. array_get($config, 'imageUpload', config('editor.imageUpload')) .',
+                imageFormats : '. array_get($config, 'imageFormats', json_encode(config('editor.imageFormats'))) .',
+                imageUploadURL : "'. array_get($config, 'imageUploadURL', config('editor.imageUploadURL')) .'?_token=' . csrf_token() . '&from=xetaravel-editor-md"
+        });
     });
-});
-</script>';
-
+    </script>';
+    }
 }
