@@ -2,7 +2,7 @@
 >
 > |Stable Version|Downloads|Laravel|License|
 > |:-------:|:------:|:-------:|:-------:|
-> |[![Latest Stable Version](https://img.shields.io/packagist/v/XetaIO/Xetaravel-Editor-md.svg?style=flat-square)](https://packagist.org/packages/xetaio/xetaravel-editor-md)|[![Total Downloads](https://img.shields.io/packagist/dt/xetaio/xetaravel-editor-md.svg?style=flat-square)](https://packagist.org/packages/xetaio/xetaravel-editor-md)|[![Laravel 5.4](https://img.shields.io/badge/Laravel-5.4-f4645f.svg?style=flat-square)](http://laravel.com)|[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/XetaIO/Xetaravel-Editor-md/blob/master/LICENSE)|
+> |[![Latest Stable Version](https://img.shields.io/packagist/v/XetaIO/Xetaravel-Editor-md.svg?style=flat-square)](https://packagist.org/packages/xetaio/xetaravel-editor-md)|[![Total Downloads](https://img.shields.io/packagist/dt/xetaio/xetaravel-editor-md.svg?style=flat-square)](https://packagist.org/packages/xetaio/xetaravel-editor-md)|[![Laravel 5.6](https://img.shields.io/badge/Laravel-5.6-f4645f.svg?style=flat-square)](http://laravel.com)|[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/XetaIO/Xetaravel-Editor-md/blob/master/LICENSE)|
 >
 > A wrapper to use [Editor.md](https://pandao.github.io/editor.md/) with Laravel.
 >
@@ -46,7 +46,7 @@
 > </head>
 > <body>
 >     <h2>Editor.md example</h2>
->     
+>
 >     <div id="editormd">
 >         <!-- You must hide it with `display:none;` -->
 >         <textarea class="form-control" name="content" style="display:none;">
@@ -69,7 +69,7 @@
 > <head>
 >    <meta charset="UTF-8">
 >    <title>Editor.md example</title>
->    
+>
 >    <!-- Embed Styles -->
 >    @stack('styles')
 > </head>
