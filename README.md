@@ -2,12 +2,12 @@
 >
 > |Stable Version|Downloads|Laravel|License|
 > |:-------:|:------:|:-------:|:-------:|
-> |[![Latest Stable Version](https://img.shields.io/packagist/v/XetaIO/Xetaravel-Editor-md.svg?style=flat-square)](https://packagist.org/packages/xetaio/xetaravel-editor-md)|[![Total Downloads](https://img.shields.io/packagist/dt/xetaio/xetaravel-editor-md.svg?style=flat-square)](https://packagist.org/packages/xetaio/xetaravel-editor-md)|[![Laravel 5.6](https://img.shields.io/badge/Laravel->=5.6-f4645f.svg?style=flat-square)](http://laravel.com)|[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/XetaIO/Xetaravel-Editor-md/blob/master/LICENSE)|
+> |[![Latest Stable Version](https://img.shields.io/packagist/v/XetaIO/Xetaravel-Editor-md.svg?style=flat-square)](https://packagist.org/packages/xetaio/xetaravel-editor-md)|[![Total Downloads](https://img.shields.io/packagist/dt/xetaio/xetaravel-editor-md.svg?style=flat-square)](https://packagist.org/packages/xetaio/xetaravel-editor-md)|[![Laravel 5.6](https://img.shields.io/badge/Laravel->=7.0-f4645f.svg?style=flat-square)](http://laravel.com)|[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/XetaIO/Xetaravel-Editor-md/blob/master/LICENSE)|
 >
 > A wrapper to use [Editor.md](https://pandao.github.io/editor.md/) with Laravel.
 >
 > ## Requirement
-> ![PHP](https://img.shields.io/badge/PHP->=7.1-brightgreen.svg?style=flat-square)
+> ![PHP](https://img.shields.io/badge/PHP->=7.2.5-brightgreen.svg?style=flat-square)
 >
 > ## Installation
 >
